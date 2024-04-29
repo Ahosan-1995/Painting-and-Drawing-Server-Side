@@ -8,7 +8,7 @@ app.use(express.json());
 // For env file
 require ('dotenv').config();
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 
@@ -30,6 +30,22 @@ async function run() {
     await client.connect();
 
     const allDataCollection=client.db('assignmentDB').collection('assignment');
+
+    app.get('/assignment', async(req,res)=>{
+        const cursor = allDataCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
+
+    // this is for detals page
+
+    app.get('/assignment/:id', async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)}
+        const result = await allDataCollection.findOne(query);
+        res.send(result);
+    })
 
 // data sent to bcend
 app.post('/add',async(req,res)=>{
