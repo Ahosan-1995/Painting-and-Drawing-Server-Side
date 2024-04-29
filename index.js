@@ -29,12 +29,15 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const 
+    const allDataCollection=client.db('assignmentDB').collection('assignment');
 
 // data sent to bcend
 app.post('/add',async(req,res)=>{
     const allData = req.body;
     console.log(allData);
+
+    const result = await allDataCollection.insertOne(allData);
+    res.send(result);
 })
 
 
