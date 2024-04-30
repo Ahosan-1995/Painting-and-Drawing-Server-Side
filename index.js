@@ -100,9 +100,45 @@ app.delete('/assignment/:id', async(req,res)=>{
     const result = allDataCollection.deleteOne(query);
     res.send(result);
 })
-
-
 // Delete operation
+
+
+
+// Update Operation
+app.get('/assignment/:id',async(req,res)=>{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = await  allDataCollection.findOne(query);
+    res.send(result);
+        
+})
+
+
+
+app.put('/assignment/:id', async(req,res)=>{
+    const id=req.params.id;
+    const filter = {_id: new ObjectId(id)};
+    const options = {upsert: true};
+    const updatedUser=req.body;
+    const user = {
+        $set:{
+            url:updatedUser.url,
+            itemName:updatedUser.itemName,
+            subcategory:updatedUser.subcategory,
+            description:updatedUser.description,
+            price:updatedUser.price,
+            rating:updatedUser.rating,
+            customization:updatedUser.customization,
+            time:updatedUser.time,
+            stock:updatedUser.stock,
+            category:updatedUser.category,
+
+        }
+    }
+    const result = await allDataCollection.updateOne(filter, user,options);
+    res.send(result);
+})
+// Update Operation
 
 
 
