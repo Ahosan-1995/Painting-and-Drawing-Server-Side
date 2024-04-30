@@ -31,6 +31,19 @@ async function run() {
 
     const allDataCollection=client.db('assignmentDB').collection('assignment');
 
+    const allDataCollection2=client.db('assignmentDB').collection('extraData');
+    
+    app.get('/subcategory', async(req,res)=>{
+        const cursor = allDataCollection2.find();
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
+
+
+
+
+
     app.get('/assignment', async(req,res)=>{
         const cursor = allDataCollection.find();
         const result = await cursor.toArray();
@@ -46,6 +59,27 @@ async function run() {
         const result = await allDataCollection.findOne(query);
         res.send(result);
     })
+
+
+
+    app.get('/assignmentemail/:email', async(req,res)=>{
+        const email = req.params.email;
+        const query = {email:email}
+        const cursor = await allDataCollection.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
+
+
+
+// This is for find data by email
+app.get('/assignment', async(req,res)=>{
+    const cursor = allDataCollection.find()
+    const results = await cursor.toArray();
+    res.send(results);
+})
+
 
 // data sent to bcend
 app.post('/add',async(req,res)=>{
