@@ -93,6 +93,16 @@ app.post('/add',async(req,res)=>{
 
 
 
+// Delete operation
+app.delete('/assignment/:id', async(req,res)=>{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = allDataCollection.deleteOne(query);
+    res.send(result);
+})
+
+
+// Delete operation
 
 
 
